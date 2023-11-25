@@ -21,12 +21,10 @@ const generateHtml = (questions) => {
         
 const question_paper = async (req, res) => {
     const { marks, difficulty } = req.body;
-    console.log(req.body);
 
     try {
         const diff_arr = ['Easy', 'Medium', 'Hard']; 
         var i = 0
-        console.log(diff_arr[i])
 
         var q = [  ];
         while (i < 3){
@@ -35,16 +33,7 @@ const question_paper = async (req, res) => {
             total_n = i == 0 ? total_n + 1 : total_n
 
             console.log(total_n)
-            // const query = questions.find({ difficulty: })
-            
-            // for (const j in total_n){
             const segment = await questions.find({ difficulty: diff_arr[i], $expr: { $lt: [0.5, {$rand: {} } ] } }).limit(total_n)
-            // const segment_cursor = await questions.aggregate([
-            //     { $match: { difficulty: diff_arr[i] } },
-            //     { $sample: { size: total_n } }
-            //   ])
-              
-            // const segment = segment_cursor.toArray();
             q = q.concat(segment)
 
             console.log(segment.length)
@@ -56,7 +45,8 @@ const question_paper = async (req, res) => {
             // deleting the extra question added for fractional part for number of question
             q = q.slice(1)
         } else if (q.length < marks / 10){
-            res.status(401).send("Enough Questions not available")
+            res.status(400).send("Enough Questions not available")
+            return;
         } 
 
         console.log(`The total questions are ${q.length}`)
@@ -75,11 +65,11 @@ const question_paper = async (req, res) => {
         fs.writeFileSync(filePath, pdfBuffer);
 
         // Send the response
-        res.send(`marks: ${marks}\ndifficulty: ${difficulty[0]}\nPDF generated successfully: ${fileName}`);
+        res.send(`Question-paper generated successfully: ${fileName}`);
 
         // res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        console.error('Error registering user', error);
+        console.error('Error in generating the paper ', error);
         res.status(500).json({ "error": error.message });
     }
 };

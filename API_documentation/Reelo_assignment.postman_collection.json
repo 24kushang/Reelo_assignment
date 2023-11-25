@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "228895de-9b5a-45e5-a789-b756ecea0522",
+		"name": "Reelo_assignment",
+		"description": "Once the server is turned on and Database is connected.\n\n<u><b>Health Check</b></u> request could be used to check whether the server is running or not.\n\n<u><b>Generate Question Paper</b></u> can be used to make a question paper from question_store.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30935731"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:3000/",
+				"description": "General Health Check - To check whether the environment is running or not."
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Question Paper",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"marks\": 100,\r\n    \"difficulty\": [ 40, 40, 20 ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/v1/question-paper"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Question",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"question\": \"Who is the first President of India?\",\r\n    \"subject\": \"History\",\r\n    \"topic\": \"Independence\",\r\n    \"difficulty\": \"Easy\",\r\n    \"marks\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3000/api/v1/add-question"
+			},
+			"response": []
+		}
+	]
+}
