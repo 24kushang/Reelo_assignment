@@ -1,10 +1,11 @@
-const uri = "mongodb://0.0.0.0:27017/Reelo";
 const mongoose = require('mongoose');
 
 const connectDB = () => {
-  console.log("hello world")
-    return mongoose.connect(uri);
-
+  return mongoose.connect(process.env.MONGO_URI).then(() => {
+    console.log('Connected to database successfully');
+  }).catch((err) => {
+    console.log('Error connecting to database:', err);
+  });
 }
 
 module.exports = connectDB;
